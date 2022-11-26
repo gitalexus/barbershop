@@ -1,12 +1,315 @@
 <!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <meta charset="utf-8">
-    <title>HTML Academy: Мишка</title>
-  </head>
-  <body>
+<!-- Добавление БЭМ блока page позволит нам избавиться от глобальных селекторов по тегам html и body -->
+<!-- Похоже на религиозные извращения, но тем не менее так тоже делают, во всяком случае в теории) -->
+<!-- Помогает соблюсти методологию при реализации sticky-footer -->
+<html class="page" lang="ru">
 
-    <p>Репозиторий создан для обучения на профессиональном онлайн‑курсе «<a href="https://htmlacademy.ru/intensive/adaptive">HTML и CSS. Адаптивная вёрстка и автоматизация</a>».</p>
+<head>
+  <meta charset="utf-8">
+  <title>HTML Academy: Барбершоп "Бородинский"></title>
+</head>
 
-  </body>
+<body class="page__body">
+  <!-- В академии любят называть это main-header, что явно избыточно, т.к. гланый он и так один -->
+  <header class="header">
+    <!-- логотип сделан элементом блока шапки, а не блоком, т.к. он нигде больше не переиспользуется -->
+    <!-- блоком его легко от рефакторить, когда это действительно понадобится -->
+    <a class="header__logo" href="index.html">
+      <img src="img/logo-mobile.svg" width="226" height="30" alt="Логотип барбершопа бородинский.">
+    </a>
+    <nav class="main-nav">
+      <button class="main-nav__toggle" type="button">
+        <span class="visually-hidden">Открыть меню</span>
+      </button>
+
+      <!-- Центровщик навигации (|| container)-->
+      <!-- На практике его бы сделали более глобальным, реализация центровщика для каждого блока, это сокорее теоретический подход-->
+      <div class="main-nav__wrapper">
+        <ul class="main-nav__list site-list">
+          <!-- Вводим модификатор текущего элемента (current или active) -->
+          <li class="site-list__item site-list__item--current">
+            <a>Главная</a>
+          </li>
+          <li class="site-list__item">
+            <a href="#">Наши работы</a>
+          </li>
+          <li class="site-list__item">
+            <a href="#">Записаться</a>
+          </li>
+          <li class="site-list__item">
+            <a href="#">Контакты</a>
+          </li>
+          <li class="site-list__item">
+            <a href="#">HTML Academy</a>
+          </li>
+        </ul>
+        <!-- div вместо списка, т.к. только один элемент. По неоходимости просто заменим его на ul, а форматирование станется -->
+        <div class="main-nav__list user-list">
+          <a class="user-list__login" href="login.html">
+            <svg class="user-list__login-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <g opacity=".3" fill="#fff">
+                <path d="M7 2h7v12H7v2h9V0H7v2Z" />
+                <path d="M7 9H0V7h7V4l4 4-4 4V9Z" />
+              </g>
+            </svg>
+            Войти
+          </a>
+        </div>
+      </div>
+
+    </nav>
+  </header>
+
+  <!-- Основная часть страницы -->
+  <main class="main">
+
+    <h1>Барбершоп Бородинский - истинно мужская классика</h1>
+
+    <!-- Секция статистика -->
+    <section class="stats">
+      <!-- wrapper для центрирования -->
+      <div class="stats__wrapper">
+        <header class="stats__header">
+          <h2 class="visually-hidden">Статистика барбершопа</h2>
+          <p class="stats__tagline">
+            Стрижка у нас<br>
+            это выгодно!
+          </p>
+          <p class="stats__intro">
+            Мужская стрижка требует<br>
+            точного подхода.<br>
+            Обратимся к статистике:
+          </p>
+          <p class="stats__legend stats__legend--no-mobile">
+            <small>* — приведённые данные ложь</small>
+          </p>
+        </header>
+        <!-- так как список содержит пары значений, то хорошо подходит dl -->
+        <dl class="stats__list">
+          <div class="stats__item">
+            <dt class="stats__namber">
+              1 500<sup>*</sup>
+            </dt>
+            <dd class="stats__description">
+              рублей вложений
+            </dd>
+          </div>
+          <div class="stats__item">
+            <dt class="stats__namber">
+              7 200
+            </dt>
+            <dd class="stats__description">
+              секунд времени мастера
+            </dd>
+          </div>
+          <div class="stats__item">
+            <dt class="stats__namber">
+              90 000
+            </dt>
+            <dd class="stats__description">
+              постриженных волос
+            </dd>
+          </div>
+          <div class="stats__item">
+            <dt class="stats__namber">
+              500 000<sup>*</sup>
+            </dt>
+            <dd class="stats__description">
+              лайков и комплиментов
+            </dd>
+          </div>
+        </dl>
+        <!-- Дублируем текст из шапки (это не хорошо, но просто адаптивно передвинуть его не получится) -->
+        <!-- В первую очередь дублирование меню очень плохо с точки зрения восприятия сайта поисковиком -->
+        <small class="stats__legend stats__legend--mobile">* — приведённые данные ложь</small>
+      </div>
+
+    </section>
+
+    <!-- Секция преимущства -->
+    <section class="advantages">
+      <!-- к обертке преимуществ подмиксован блок слайдера (mobile) -->
+      <div class="advantages__wrapper slider">
+        <h2 class="visually-hidden">Наши преимущества</h2>
+        <!-- подмиксован слайдер лист -->
+        <ul class="advantages__list slider__list">
+          <!-- модификатор ..fast управляет иконкой, подмиксован slider__item -->
+          <li class="advantages__item advantages__item--fast slider__item">
+            <h3 class="advantages__title">Быстро</h3>
+            <p class="advantages__desc">
+              Мы делаем свою работу быстро! Два часа пролетят незаметно
+              и вы — счастливый обладатель стильной стрижки-минутки
+            </p>
+          </li>
+          <!-- модификтор ..cool управляет иконкой, подмиксован slider__item -->
+          <li class="advantages__item advantages__item--cool slider__item">
+            <h3 class="advantages__title">Круто</h3>
+            <p class="advantages__desc">
+              Забудьте, как вы стриглись раньше. Мы сделаем из вас звезду футбола или кино. Во всяком случае внешне.
+            </p>
+          </li>
+          <!-- модификтор ..expensive управляет иконкой, подмиксован slider__item -->
+          <li class="advantages__item advantages__item--expensive slider__item">
+            <h3 class="advantages__title">Дорого</h3>
+            <p class="advantages__desc">
+              Наши мастера — профессионалы своего дела не могут стоить дёшево. К тому же, разве цена не даёт
+              определённый
+              статус?
+            </p>
+          </li>
+        </ul>
+
+        <!-- этот блок управляет позиционирование toggles -->
+        <p class="advantages__toggles">
+          <!-- slider__toggle - элемент слайдера управляет внешним видом  toggle -->
+          <!-- модификатор текущей кнопки -->
+          <button class="slider__toggle slider__toggle--current" type="button">
+            <span class="visually-hidden">1</span>
+          </button>
+          <button class="slider__toggle" type="button">
+            <span class="visually-hidden">2</span>
+          </button>
+          <button class="slider__toggle" type="button">
+            <span class="visually-hidden">3</span>
+          </button>
+        </p>
+      </div>
+    </section>
+
+    <!-- Секция новости -->
+    <section class="news">
+      <div class="news__wrapper">
+        <h3 class="news__title">Новости и акции</h3>
+        <ul class="news__list">
+          <li class="news__item">
+            <a class="news__link" href="#">
+              <time class="news__date" datetime="2017-09-29">
+                <b class="news__day">29</b> сент
+              </time>
+              <p class="news__desc">
+                Нам наконец завезли Ягермайстер! Теперь вы можете пропусить стаканчик во время стрижки.
+              </p>
+            </a>
+            <a class="news__link" href="#">
+              <time class="news__date" datetime="2017-09-19">
+                <b class="news__day">19</b> сент
+              </time>
+              <p class="news__desc">
+                В нашей команде пополнение, Борис «Бритва» Стригунец, пополнил наши стройные ряды. Спешите записаться!
+              </p>
+            </a>
+            <a class="news__link" href="#">
+              <time class="news__date" datetime="2017-09-09">
+                <b class="news__day">9</b> сент
+              </time>
+              <p class="news__desc">
+                Все дорожает, а наши стрижки нет! Как так? Приходите, постригитесь и узнаете, в чем здесь подвох!
+              </p>
+            </a>
+          </li>
+        </ul>
+        <!-- Подмиксовываем к баттону элемент блока новостей (для позиционирования) -->
+        <a class="news__to-all button" href="#">Показать все</a>
+      </div>
+    </section>
+
+    <section class="reviews">
+      <div class="reviews__wrapper slider">
+        <h2 class="reviews__title">Отзывы о нас</h2>
+        <a class="reviews__write button" href="form.html">Оставить свой</a>
+        <div class="reviews__list slider__list">
+          <!-- Стандартно для отзывов blockquote -->
+          <blockquote class="reviews__item slider__item">
+            <!-- TODO:  изменить формат изображений -->
+            <img class="reviews__author-image" width="50" height="50" src="img/photo.jpg"
+              alt="Лысый татуированный мужчина.">
+            <div class="reviews__author-info">
+              <cite class="reviews__autor-name">Тревис Баккер</cite>
+              <p class="reviews__text">
+                Спасибо за лысину! Был проездом в Москве, заскочил побриться, чтобы было видно
+                новую татуировку!
+              </p>
+            </div>
+          </blockquote>
+          <blockquote class="reviews__item slider__item">
+            <!-- TODO:  изменить формат изображений -->
+            <img class="reviews__author-image" width="50" height="50" src="img/photo.jpg"
+              alt="Лысый татуированный мужчина.">
+            <div class="reviews__author-info">
+              <cite class="reviews__autor-name">Джон Смит</cite>
+              <p class="reviews__text">
+                Отличную стрижку мне сделали ребята.
+              </p>
+            </div>
+          </blockquote>
+          <blockquote class="reviews__item slider__item">
+            <!-- TODO:  изменить формат изображений -->
+            <img class="reviews__author-image" width="50" height="50" src="img/photo.jpg"
+              alt="Лысый татуированный мужчина.">
+            <div class="reviews__author-info">
+              <cite class="reviews__autor-name">Иван Бородайло</cite>
+              <p class="reviews__text">
+                В Бородинском ваша борода в надёжных руках!
+              </p>
+            </div>
+          </blockquote>
+          <button class="reviews__prev">Предыдущий отзыв</button>
+          <button class="reviews__next">Следующий отзыв</button>
+        </div>
+        <p class="reviews__toggles">
+          <button class="slider__toggles slider__toggles--current" type="button">
+            <span class="visually-hidden">Отзыв 1</span>
+          </button>
+          <button class="slider__toggles" type="button">
+            <span class="visually-hidden">Отзыв 2</span>
+          </button>
+          <button class="slider__toggles" type="button">
+            <span class="visually-hidden">Отзыв 3</span>
+          </button>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <!--  кроме стандартного центровщика сразу добавляем три div секции (блока) для футера -->
+    <div class="footer__wrapper">
+      <!-- блок контактов миксование -->
+      <div class="footer__contacts contacts">
+        <b class="contacts__title">Барбершоп Бородинский</b>
+        <p class="contacts__text">
+          г. Санкт-Петербург, ул. Большая Конюшенная 19/8<br>
+          <a class="contacts__phone" href="tel:+78125556666">
+            <span class="contacts__phone-text">Тел.: </span>+7 (812) 555-66-66
+          </a>
+        </p>
+      </div>
+      <!-- блок social миксование -->
+      <div class="footer__social social">
+        <b class="social__title">Давайте дружить</b>
+          <ul class="social__list">
+            <li class="social__item">
+              <a class="social__link social__link--vk" href="#">Мы в Вконтакте</a>
+            </li>
+            <li class="social__item">
+              <a class="social__link social__link--youtube" href="#">Мы в Ютубе</a>
+            </li>
+            <li class="social__item">
+              <a class="social__link social__link--telegram" href="#">Мы в Телеграме</a>
+            </li>
+          </ul>
+      </div>
+      <!-- блок copyright миксование -->
+      <div class="footer__copyright copyright">
+        <b class="copyright__title">Разработано:</b>
+        <a class="copyright__link" href="#">HTML Academy</a>
+      </div>
+
+    </div>
+  </footer>
+
+</body>
+
 </html>
